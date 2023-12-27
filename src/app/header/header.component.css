@@ -1,0 +1,15 @@
+.navbar{
+  margin-bottom: 15px;
+}
+
+.navbar-nav {
+  flex-direction: row !important; /* Use !important to override Bootstrap styles */
+}
+
+.navbar-nav li{
+  padding: 0 15px;
+}
+
+.navbar-nav li.active{
+  background-color: #efefef;
+}

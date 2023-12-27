@@ -1,0 +1,68 @@
+
+<div class="home-container">
+
+  <div class="search-container">
+    <mat-form-field>
+      <input
+        type="text"
+        matInput
+        [formControl]="searchControl"
+        placeholder="Search city"
+        [matAutocomplete]="auto"
+      />
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="onOptionSelected($event)">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+          {{ option.LocalizedName }}, {{ option.Country.LocalizedName }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+
+
+  <div *ngIf="currentWeather" class="weather-container">
+    <div class="weather-data">
+
+      <div class="favirites-icons">
+        <mat-icon (click)="toggleFavorite()" [class.hidden]="isFavorite">{{ isFavorite ? 'favorite' : 'favorite_border' }}</mat-icon>
+      </div>
+
+      <div class="current-data">
+        <img src="../../assets/icons/{{currentWeather[0].WeatherIcon}}.png">
+        <div class="info-label">
+          <div class="cityName">{{cityObject.LocalizedName | titlecase }}</div>
+          <div class="cityTemp">{{currentWeather[0].Temperature.Metric.Value| number : '1.1-1'}}°C</div>
+        </div>
+      </div>
+
+      <div class="weekly-forecasts">
+
+        <div class="daily-forecasts" *ngFor="let weatherDay of forecasts.DailyForecasts">
+          <span class="dayString">{{weatherDay.Date |  date:'EEEE'}}</span>
+          <span>{{weatherDay.Temperature.Minimum.Value| number : '1.1-1'}}°C - {{weatherDay.Temperature.Maximum.Value| number : '1.1-1'}}°C</span>
+          <img src="../../assets/icons/{{weatherDay.Day.Icon}}.png">
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="errorModal" data-keyboard="false" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+        <div class="close-button">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <h3 class="modal-title"><b>ERROR</b></h3>
+
+        <div>{{errorMessage.error}}</div>
+    </div>
+  </div>
+</div>

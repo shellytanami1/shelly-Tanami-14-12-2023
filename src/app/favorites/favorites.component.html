@@ -1,0 +1,20 @@
+<div class="favorites-container">
+
+
+  <div class="favorite-wrap">
+
+    <div class="wrap-title"> <img src="../../assets/pictures/city.png"> <span>Favorites Cities</span></div>
+
+    <div class="favorite-data">
+      <div *ngFor="let city of favoritesCities" class="favorite-city" (click)="goToHomePageWithCity(city)">
+        <span class="cityName">{{ city.LocalizedName | titlecase }}</span>
+        <span>{{ city.Temperature.Metric.Value }}°C</span>
+        <div class="img-text-wrap">
+          <img src="../../assets/icons/{{city.WeatherIcon}}.png">
+          <span class="weatherText">{{ city.WeatherText }}</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
