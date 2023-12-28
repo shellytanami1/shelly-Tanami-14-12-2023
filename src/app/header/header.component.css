@@ -1,9 +1,12 @@
 .navbar{
   margin-bottom: 15px;
+  background-color: var(--background-element);
 }
-
+.navbar a{
+  color: var(--font-color);
+}
 .navbar-nav {
-  flex-direction: row !important; /* Use !important to override Bootstrap styles */
+  flex-direction: row !important;
 }
 
 .navbar-nav li{
@@ -12,4 +15,35 @@
 
 .navbar-nav li.active{
   background-color: #efefef;
+}
+
+.themeModeButtons{
+  border: 1px solid;
+  border-radius: 5px;
+}
+
+.themeModeButtons label{
+  font-size: 13px;
+}
+
+.themeModeButtons label.active{
+  background-color: #efefef;
+  border-color: transparent;
+  box-shadow: none
+}
+
+.themeModeButtons mat-icon{
+  font-size: 20px;
+  width: auto;
+}
+.form-inline label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 470px) {
+  .navbar-brand{
+    width: 100%;
+  }
 }

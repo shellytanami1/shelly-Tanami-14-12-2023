@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, forkJoin, map, Observable, of, startWith, switchMap } from 'rxjs';
+import { debounceTime, distinctUntilChanged, forkJoin, map, Observable, of, startWith, Subscription, switchMap } from 'rxjs';
 import { WeatherService } from '../services/weatherData/weather.service';
 import * as $ from 'jquery';
 import 'bootstrap';
@@ -31,6 +31,10 @@ export class HomeComponent {
 
   errorMessage: any = {};
 
+  private currentCitySubscription: Subscription | undefined;
+  private dataWeatherSubscription: Subscription | undefined;
+
+
   constructor(private fb: FormBuilder,
     private weatherService: WeatherService,
     private favoritesService: FavoritesService){}
@@ -42,12 +46,12 @@ export class HomeComponent {
     })
 
     this.filteredOptions = this.searchControl.valueChanges.pipe(
-      debounceTime(300), // wait for 300ms pause in events
-      distinctUntilChanged(), // ignore if value is the same as previous
+      debounceTime(300),
+      distinctUntilChanged(),
       switchMap((value) => this._filter(value))
     );
 
-    this.weatherService.currentCity$.subscribe((cityDetails) => {
+    this.currentCitySubscription = this.weatherService.currentCity$.subscribe((cityDetails) => {
       if(cityDetails){
         this.cityObject = cityDetails;
       }
@@ -59,7 +63,6 @@ export class HomeComponent {
   private _filter(value: string): Observable<any[]> {
 
     if (!value || value.length < 3) {
-      //Minimum 3 characters
       return of([]);
     }
 
@@ -85,17 +88,17 @@ export class HomeComponent {
   }
 
   getWeather(obj: any){
+    
     this.cityObject = obj;
     this.isFavorite = this.favoritesService.isFavorite(this.cityObject.Key);
 
-    this.weatherService.getDataWeather(obj.Key, obj.LocalizedName).subscribe((res:any) =>{
+    this.dataWeatherSubscription = this.weatherService.getDataWeather(obj.Key, obj.LocalizedName).subscribe((res:any) =>{
       if(res && res.error){
         this.errorMessage = res;
         $('#errorModal').modal();
       }
       this.currentWeather = res.currentWeather;
       this.forecasts = res.forecastsData;
-      console.log(this.currentWeather)
     });
   }
 
@@ -104,6 +107,16 @@ export class HomeComponent {
     this.isFavorite = !this.isFavorite;
     if(this.isFavorite) this.favoritesService.addToFavorives(Object.assign(this.cityObject, this.currentWeather[0]));
     else this.favoritesService.removeFromFavorites(this.cityObject);
+  }
+
+  ngOnDestroy() {
+
+    if (this.currentCitySubscription) {
+      this.currentCitySubscription.unsubscribe();
+    }
+    if (this.dataWeatherSubscription) {
+      this.dataWeatherSubscription.unsubscribe();
+    }
   }
 
 }

@@ -1,6 +1,9 @@
 :root{
   --error-text: #d74040;
   --error-background: rgb(247 192 194 / 85%);
+  --background-element: #f8f9fa;
+  --background-body: white;
+  --font-color: rgb(33, 37, 41);
 }
 
 html, body { height: 100%; }
@@ -8,4 +11,6 @@ html, body { height: 100%; }
 body {
   margin: 0;
   font-family: sans-serif;
+  background-color: var(--background-body);
+  color: var(--font-color);
 }

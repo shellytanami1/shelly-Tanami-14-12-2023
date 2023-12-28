@@ -13,6 +13,7 @@
 ::ng-deep .mdc-text-field--filled{
     /* border: 1px solid; */
     border-radius: 10px !important;
+    background-color: var(--background-element) !important;
 }
 
 ::ng-deep .mat-mdc-form-field:hover .mat-mdc-form-field-focus-overlay {
@@ -22,6 +23,23 @@
   background-color: aliceblue;
 }
 
+::ng-deep .div.mat-mdc-autocomplete-panel{
+  color: var(--background-element);
+
+}
+::ng-deep .div.mat-mdc-autocomplete-panel.mat-mdc-autocomplete-visible,
+::ng-deep .mdc-text-field--filled.mdc-text-field--no-label .mdc-text-field__input,
+::ng-deep .mat-mdc-option.mdc-list-item,
+::ng-deep .mat-autocomplete-trigger::placeholder{
+  color: var(--font-color) !important;
+}
+::ng-deep div.mat-mdc-autocomplete-panel.mat-mdc-autocomplete-visible{
+  background-color: var(--background-element);
+}
+::ng-deep .mat-mdc-option:hover:not(.mdc-list-item--disabled) {
+  background-color: var(--background-element);
+}
+
 .current-data{
   display: flex;
   flex-direction: row;
@@ -29,7 +47,7 @@
   max-width: 500px;
   aspect-ratio: 2;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
-  background-color: white;
+  background-color: var(--background-body);
   align-items: center;
   border-radius: 20px;
   margin: 0 0 50px 12px;
@@ -54,7 +72,7 @@
 .weather-data{
   width: 90%;
   max-width: 1300px;
-  background-color: whitesmoke;
+  background-color: var(--background-element);
   border-radius: 30px;
   padding: 30px 60px 50px 60px;
 }
@@ -83,7 +101,7 @@
   padding: 20px 10px;
   border-radius: 10px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
-  background-color: white;
+  background-color: var(--background-body);
 }
 
 .daily-forecasts span{
@@ -175,3 +193,6 @@
   }
 }
 
+.mat-icon {
+  transition: opacity 0.3s ease-in-out;
+}

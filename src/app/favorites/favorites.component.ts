@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { FavoritesService } from '../services/favorites/favorites.service';
 import { WeatherService } from '../services/weatherData/weather.service';
 
@@ -11,6 +12,7 @@ import { WeatherService } from '../services/weatherData/weather.service';
 export class FavoritesComponent {
 
   favoritesCities: any;
+  private favoritesServiceSubscription: Subscription | undefined;
 
   constructor(private weatherService: WeatherService,
               private router: Router,
@@ -18,7 +20,7 @@ export class FavoritesComponent {
 
   ngOnInit(){
 
-    this.favoritesService.favoritesCities$.subscribe((favoritesDetails) => {
+    this.favoritesServiceSubscription = this.favoritesService.favoritesCities$.subscribe((favoritesDetails) => {
 
       this.favoritesCities = favoritesDetails;
       this.favoritesCities = Object.entries(this.favoritesCities).map(([key, value]) => ({ Key:key, ...this.favoritesCities[key] }));
@@ -30,5 +32,12 @@ export class FavoritesComponent {
 
     this.weatherService.setCurrentCity(location);
     this.router.navigate(['/home']);
+  }
+
+
+  ngOnDestroy() {
+    if (this.favoritesServiceSubscription) {
+      this.favoritesServiceSubscription.unsubscribe();
+    }
   }
 }
