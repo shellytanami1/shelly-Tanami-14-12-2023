@@ -1,7 +1,7 @@
 <div class="favorites-container">
   <div class="favorite-wrap">
 
-    <div class="wrap-title"> <img src="../../assets/pictures/city.png"> <span>Favorites Cities</span></div>
+    <div class="wrap-title"> <img src="https://png.pngtree.com/png-vector/20220706/ourmid/pngtree-modern-black-city-icon-vector-png-png-image_5709711.png"> <span>Favorites Cities</span></div>
 
     <div class="favorite-data">
 
@@ -10,7 +10,7 @@
         <span class="cityName">{{ city?.LocalizedName | titlecase }}</span>
         <span>{{ city?.Temperature?.Metric?.Value }}°C</span>
         <div class="img-text-wrap">
-          <img src="../../assets/icons/{{city?.WeatherIcon}}.png">
+          <img src="https://developer.accuweather.com/sites/default/files/{{city?.WeatherIcon<10?'0'+city?.WeatherIcon: city?.WeatherIcon}}-s.png">
           <span class="weatherText">{{ city?.WeatherText }}</span>
         </div>
 

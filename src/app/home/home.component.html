@@ -27,7 +27,8 @@
       </div>
 
       <div class="current-data">
-        <img src="../../assets/icons/{{currentWeather[0].WeatherIcon}}.png">
+        <!-- <img src="../../assets/icons/{{currentWeather[0].WeatherIcon}}.png"> -->
+        <img src="https://developer.accuweather.com/sites/default/files/{{currentWeather[0].WeatherIcon<10?'0'+currentWeather[0].WeatherIcon: currentWeather[0].WeatherIcon}}-s.png">
         <div class="info-label">
           <div class="cityName">{{cityObject.LocalizedName | titlecase }}</div>
           <div class="cityTemp">{{currentWeather[0].Temperature.Metric.Value| number : '1.1-1'}}°C</div>
@@ -39,7 +40,8 @@
         <div class="daily-forecasts" *ngFor="let weatherDay of forecasts.DailyForecasts">
           <span class="dayString">{{weatherDay.Date |  date:'EEEE'}}</span>
           <span>{{weatherDay.Temperature.Minimum.Value| number : '1.1-1'}}°C - {{weatherDay.Temperature.Maximum.Value| number : '1.1-1'}}°C</span>
-          <img src="../../assets/icons/{{weatherDay.Day.Icon}}.png">
+          <img src="https://developer.accuweather.com/sites/default/files/{{weatherDay.Day.Icon<10?'0'+weatherDay.Day.Icon: weatherDay.Day.Icon}}-s.png">
+
         </div>
       </div>
 
